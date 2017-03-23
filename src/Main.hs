@@ -4,6 +4,8 @@ import System.IO
 import Data.Char (isSpace)
 import Data.List (dropWhileEnd)
 
+trim = dropWhileEnd isSpace . dropWhile isSpace
+
 -- Memisahkan angka per 3 nol e.g 1234567 -> [1,234,567]
 pisahAngka :: String -> [String]
 pisahAngka ns = pisah' panjangString 3 ns where
@@ -70,14 +72,13 @@ nolTiga xs = reverse $ map nolTiga' $ zip (reverse xs) [1,2..] where
       counter     = snd pair
       notEmpty    = length bahasaAngka > 0
 
-ubahAngkaKeBahasa :: String -> String
-ubahAngkaKeBahasa = trim . unwords . nolTiga . map angka . pisahAngka
-
-trim = dropWhileEnd isSpace . dropWhile isSpace
+ubahAngkaKeBahasa :: Int -> String
+ubahAngkaKeBahasa = trim . unwords . nolTiga . map angka . pisahAngka . show
 
 main :: IO ()
 main = do
   hSetBuffering stdout NoBuffering
   putStr "Masukkan angkamu: "
   inputanAngka <- getLine
-  putStrLn $ (show inputanAngka) ++ " -> " ++ ubahAngkaKeBahasa inputanAngka
+  let toInt = read inputanAngka :: Int
+  putStrLn $ inputanAngka ++ " -> " ++ ubahAngkaKeBahasa toInt

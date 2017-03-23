@@ -7,3 +7,5 @@ ratus dua puluh tujuh juta delapan ratus tujuh puluh delapan ribu dua ratus dela
 LOL
 
 Inspired by [Angka Menjadi Terbilang](https://www.npmjs.com/package/angka-menjadi-terbilang)
+
+NB: executable included
