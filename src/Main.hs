@@ -54,7 +54,7 @@ bacaKelipatanSeribu :: [String] -> [String]
 bacaKelipatanSeribu xs = reverse $ map bacaKelipatanSeribu' $ zip (reverse xs) [1,2..] where
   bacaKelipatanSeribu' :: (String, Int) -> String
   bacaKelipatanSeribu' pair
-    | length bahasaAngka == 0 = ""
+    | null bahasaAngka = ""
     | counter == 1 = bahasaAngka
     | counter == 2 = if bahasaAngka == "satu" then "seribu" else bahasaAngka ++ " ribu"
     | counter == 3 = bahasaAngka ++ " juta"
