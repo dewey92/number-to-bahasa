@@ -42,38 +42,38 @@ ratusan (r:ps)
   | r == '0' || r == '1' = "seratus " ++ puluhan ps
   | otherwise            = satuan r ++ " ratus " ++ puluhan ps
 
-angka :: String -> String
-angka n
+bacaAngka :: String -> String
+bacaAngka n
   | n == "000" = ""
   | a < 10     = satuan $ head $ show a
   | a < 100    = puluhan $ show a
   | a < 1000   = ratusan $ show a
   where a = read n :: Int
 
-nolTiga :: [String] -> [String]
-nolTiga xs = reverse $ map nolTiga' $ zip (reverse xs) [1,2..] where
-  nolTiga' :: (String, Int) -> String
-  nolTiga' pair
-    | counter == 1 && notEmpty = bahasaAngka
-    | counter == 2 && notEmpty = if bahasaAngka == "satu" then "seribu" else bahasaAngka ++ " ribu"
-    | counter == 3 && notEmpty = bahasaAngka ++ " juta"
-    | counter == 4 && notEmpty = bahasaAngka ++ " milyar"
-    | counter == 5 && notEmpty = bahasaAngka ++ " triliun"
-    | counter == 6 && notEmpty = bahasaAngka ++ " kuadriliun"
-    | counter == 7 && notEmpty = bahasaAngka ++ " kuantiliun"
-    | counter == 8 && notEmpty = bahasaAngka ++ " sekstiliun"
-    | counter == 9 && notEmpty = bahasaAngka ++ " septiliun"
-    | counter == 10 && notEmpty = bahasaAngka ++ " oktiliun"
-    | counter == 11 && notEmpty = bahasaAngka ++ " noniliun"
-    | counter == 12 && notEmpty = bahasaAngka ++ " desiliun"
+bacaKelipatanSeribu :: [String] -> [String]
+bacaKelipatanSeribu xs = reverse $ map bacaKelipatanSeribu' $ zip (reverse xs) [1,2..] where
+  bacaKelipatanSeribu' :: (String, Int) -> String
+  bacaKelipatanSeribu' pair
+    | length bahasaAngka == 0 = ""
+    | counter == 1 = bahasaAngka
+    | counter == 2 = if bahasaAngka == "satu" then "seribu" else bahasaAngka ++ " ribu"
+    | counter == 3 = bahasaAngka ++ " juta"
+    | counter == 4 = bahasaAngka ++ " milyar"
+    | counter == 5 = bahasaAngka ++ " triliun"
+    | counter == 6 = bahasaAngka ++ " kuadriliun"
+    | counter == 7 = bahasaAngka ++ " kuantiliun"
+    | counter == 8 = bahasaAngka ++ " sekstiliun"
+    | counter == 9 = bahasaAngka ++ " septiliun"
+    | counter == 10 = bahasaAngka ++ " oktiliun"
+    | counter == 11 = bahasaAngka ++ " noniliun"
+    | counter == 12 = bahasaAngka ++ " desiliun"
     | otherwise = ""
     where
       bahasaAngka = fst pair
       counter     = snd pair
-      notEmpty    = length bahasaAngka > 0
 
 ubahAngkaKeBahasa :: Int -> String
-ubahAngkaKeBahasa = trim . unwords . nolTiga . map angka . pisahAngka . show
+ubahAngkaKeBahasa = trim . unwords . bacaKelipatanSeribu . map bacaAngka . pisahAngka . show
 
 main :: IO ()
 main = do
